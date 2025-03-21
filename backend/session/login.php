@@ -1,24 +1,59 @@
 <?php
-// login.php
+require_once 'CRUD.php';
 
-// Leer el contenido JSON recibido
-$data = json_decode(file_get_contents("php://input"), true);
+// Iniciar sesión si planeas mantener al cliente logueado
+session_start();
 
-// Extraer y limpiar los datos recibidos
-$username = isset($data['username']) ? trim($data['username']) : '';
-$password = isset($data['password']) ? trim($data['password']) : '';
+// Verificar si se recibió el DNI (por POST o GET)
+if (isset($_POST['dni'])) {
+    $dni = $_POST['dni'];
 
-// Aquí se debe conectar a la base de datos y validar las credenciales.
-// Este ejemplo usa valores fijos para ilustrar el proceso:
-if ($username === 'admin' && $password === 'admin123') {
-    echo json_encode([
-        'success' => true,
-        'message' => 'Login exitoso'
-    ]);
+    $crud = new CRUD();
+    $cliente = $crud->getClienteByDNI($dni);
+
+    if ($cliente) {
+        if (isset($_POST['password'])){
+            $passwordGuess = $_POST['password'];
+            $password = $cliente["contraseña"];
+
+            if (password_verify($passwordGuess, $password)){
+                // Guardamos info del cliente en la sesión si quieres usarla después
+                $_SESSION['cliente_id'] = $cliente['id'];
+                $_SESSION['cliente_nombre'] = $cliente['nombre'];
+                
+                // Devolver respuesta JSON indicando éxito
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Login correcto',
+                    'cliente' => $cliente
+                ]);
+            }else{
+                // Contraseña incorrecta
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Contraseña incorrecta'
+                ]);
+            }
+        }else {
+            // Contraseña no encontrada
+            echo json_encode([
+                'success' => false,
+                'message' => 'No se recibió contraseña'
+            ]);
+        }
+        
+    } else {
+        // Cliente no encontrado
+        echo json_encode([
+            'success' => false,
+            'message' => 'DNI no encontrado'
+        ]);
+    }
 } else {
+    // No se recibió DNI
     echo json_encode([
         'success' => false,
-        'message' => 'Credenciales incorrectas'
+        'message' => 'No se recibió el DNI'
     ]);
 }
 ?>
