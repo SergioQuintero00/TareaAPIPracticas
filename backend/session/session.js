@@ -1,28 +1,21 @@
 
 function validaInicio() {
   
-  const nombre = document.getElementById("nombre");
+  const dni = document.getElementById("dni");
   const password = document.getElementById("password");
-
-  const errorAlias = document.getElementById("errorNombre");
-  const errorPassword = document.getElementById("errorPassword");
 
   let esValido = true;
 
-  // Validar el campo "nombre"
-  if (!(/^.{3,30}$/).test(nombre.value)) {
-    errorAlias.style.display = "inline";
+  // Validar el campo "dni"
+  if (!(/^\d{8}[a-zA-Z]$/).test(dni.value)) {
+    alert("DNI inválido")
     esValido = false;
-  } else {
-    errorAlias.style.display = "none";
   }
 
   // Validar el campo "DNI"
-  if (!(/^.{3,30}$/).test(password.value)) {
-    errorPassword.style.display = "inline";
+  if (!(/^.{1,30}$/).test(password.value)) {
+    alert("Introduzca una contraseña")
     esValido = false;
-  } else {
-    errorPassword.style.display = "none";
   }
 
   if (esValido == true){
@@ -32,7 +25,7 @@ function validaInicio() {
 
 function login(){
     // Capturar los valores del formulario
-    var username = document.getElementById('username').value;
+    var dni = document.getElementById('dni').value;
     var password = document.getElementById('password').value;
     
     // Crear la petición AJAX
@@ -45,7 +38,7 @@ function login(){
           // Redirigir a menu.html si el login es exitoso
           window.location.href = "menu.html";
         } else {
-          document.getElementById("loginMessage").innerHTML = "Error: " + response.message;
+          alert(response.message)
         }
       }
     };
@@ -55,6 +48,6 @@ function login(){
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     
     // Convertir los datos a formato JSON y enviarlos
-    var data = JSON.stringify({ username: username, password: password });
+    var data = JSON.stringify({ dni: dni, password: password });
     xmlhttp.send(data);
 }
