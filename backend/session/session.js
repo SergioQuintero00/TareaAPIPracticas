@@ -10,12 +10,14 @@ function validaInicio() {
   if (!(/^\d{8}[a-zA-Z]$/).test(dni.value)) {
     alert("DNI inválido")
     esValido = false;
+    return null;
   }
 
   // Validar el campo "DNI"
   if (!(/^.{1,30}$/).test(password.value)) {
     alert("Introduzca una contraseña")
     esValido = false;
+    return null;
   }
 
   if (esValido == true){
@@ -44,7 +46,7 @@ function login(){
     };
     
     // Configurar la petición: método POST y URL del script PHP
-    xmlhttp.open("POST", "login.php", true);
+    xmlhttp.open("POST", "../backend/session/login.php", true);
     xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     
     // Convertir los datos a formato JSON y enviarlos
