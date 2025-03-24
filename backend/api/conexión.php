@@ -3,8 +3,8 @@
 class Conexion {
   private $host = "localhost";
   private $dbname = "TareaServicios";
-  private $dbuser = "sergio";        // Reemplaza con tu usuario de PostgreSQL
-  private $dbpassword = "root";   // Reemplaza con tu contraseña
+  private $dbuser = "sergio";
+  private $dbpassword = "root";
   private $pdo;
 
   public function __construct() {
