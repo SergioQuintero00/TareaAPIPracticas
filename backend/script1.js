@@ -3,73 +3,79 @@
 //esto proximamente sera cambiado por las consultas y un bucle para añadir todos los servicios
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    const idServicio = 5214;
-    const asunto = "El coche pierde aceite";
-    const estado = "Pendiente";
-    const detalle = "El coche esta perdiendo aceite por un agujero en el motor en la zona inferior";
-
-    const divPadre = document.getElementById("accordionServicios");
-    //id es el atributo id
-    const collapseVar = "collapse" + idServicio;
-    const headingVar = "heading" + idServicio;
-    //Creamos el div padre de cada elemento del accordion
-    const divAcordion = document.createElement("div");
-    divAcordion.className = "accordion-item";
-    //Creamos el h2 que ira dentro del div
-    const h2 = document.createElement("h2");
-    h2.className = "accordion-header";
-    h2.id = headingVar;
-    //Creamos el button que va dentro del h2
-    const button = document.createElement("button");
-    button.className = "accordion-button collapsed";
-    button.type = "button";
-    //Asignamos los atributos de esta manera
-    button.setAttribute("data-bs-toggle", "collapse");
-    button.setAttribute("data-bs-target", "#" + collapseVar);
-    button.setAttribute("aria-controls", collapseVar);
-    //Creamos los span y div que van dentro del button
-    const spanAsunto = document.createElement("span");
-    spanAsunto.className = "me-auto";
-    //Aqui editamos y ponemos la variable con el asunto
-    spanAsunto.textContent = asunto;
-    const spanId = document.createElement("span");
-    spanId.className = "me-3";
-    //Aqui editamos y ponemos la variable con el ID
-    spanId.textContent = idServicio;
-
-    const divEstado = document.createElement("div");
-    //Creamos un div para depende de que estado sea tener un color y contenido diferente
-    if (estado === "Completado") {
-        divEstado.className = "badge bg-success";
-        divEstado.textContent = "Completado";
-    }
-    else if (estado === "Pendiente") {
-        divEstado.className = "badge bg-warning";
-        divEstado.textContent = "Pendiente"
-    }
-    else if (estado === "En proceso") {
-        divEstado.className = "badge bg-info";
-        divEstado.textContent = "En proceso"
-    }
-    const divCollapse = document.createElement("div");
-    divCollapse.className = "accordion-collapse collapse";
-    divCollapse.id = collapseVar;
-    divCollapse.setAttribute("aria-labelledby", headingVar);
-    divCollapse.setAttribute("data-bs-parent", "#accordionServicios");
-
-    const divAcordionBody = document.createElement("div");
-    divAcordionBody.className = "accordion-body";
-    //Añadir la variable de los detalles
-    divAcordionBody.textContent = detalle;
-
-    divCollapse.appendChild(divAcordionBody);
-    button.appendChild(spanAsunto);
-    button.appendChild(spanId);
-    button.appendChild(divEstado);
-    h2.appendChild(button);
-    divAcordion.appendChild(h2);
-    divAcordion.appendChild(divCollapse);
-    divPadre.appendChild(divAcordion)
-
+  getServiciosCliente();
 });
+
+function getServiciosCliente() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState === 4 && this.status === 200) {
+      // Procesar la respuesta JSON del servidor
+      var response = JSON.parse(this.responseText);
+      if (response.success) {
+        setServicios(response.servicios);
+      } else {
+        alert("Sesión no iniciada");
+      }
+    }
+  };
+
+  // Configurar la petición: método POST y URL del script PHP
+  xmlhttp.open("POST", "../backend/servicios/getServiciosClientes.php", true);
+  xmlhttp.send();
+}
+
+function setServicios(servicios) {
+  const divPadre = document.getElementById("accordionServicios");
+  divPadre.innerHTML = ""; // Limpiar contenido anterior
+
+  if (servicios != null) {
+    servicios.forEach(servicio => {
+      const idServicio = servicio.id;
+      const asunto = servicio.asunto;
+      const estado = servicio.estado;
+      // Asumimos que 'detalles' es un array y lo unimos en una cadena HTML
+      const detalle = Array.isArray(servicio.detalles)
+        ? servicio.detalles.map(d => d.detalle).join("<br>")
+        : "";
+
+      // Determinar la clase del badge según el estado
+      let badgeClass = "";
+      switch (estado) {
+        case "Completado":
+          badgeClass = "bg-success";
+          break;
+        case "Pendiente":
+          badgeClass = "bg-warning";
+          break;
+        case "En proceso":
+          badgeClass = "bg-info";
+          break;
+        default:
+          badgeClass = "bg-secondary";
+      }
+
+      // Usamos un template string para crear el HTML
+      const accordionItem = `
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading${idServicio}">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${idServicio}" aria-controls="collapse${idServicio}">
+                    <span class="me-auto">${asunto}</span>
+                    <span class="me-3">#${idServicio}</span>
+                    <div class="badge ${badgeClass}">${estado}</div>
+                  </button>
+                </h2>
+                <div id="collapse${idServicio}" class="accordion-collapse collapse" aria-labelledby="heading${idServicio}" data-bs-parent="#accordionServicios">
+                  <div class="accordion-body">
+                    ${detalle}
+                  </div>
+                </div>
+              </div>
+            `;
+
+      divPadre.innerHTML += accordionItem;
+    });
+  } else {
+    divPadre.innerHTML = "<p> No existe ningún servicio </p>";
+  }
+}

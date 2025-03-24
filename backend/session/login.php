@@ -20,6 +20,7 @@ if (isset($data['dni'])) {
             if (password_verify($passwordGuess, $password)){
                 $_SESSION['cliente_id'] = $cliente['id'];
                 $_SESSION['cliente_nombre'] = $cliente['nombre'];
+                $_SESSION['cliente_dni'] = $cliente['dni'];
                 
                 echo json_encode([
                     'success' => true,

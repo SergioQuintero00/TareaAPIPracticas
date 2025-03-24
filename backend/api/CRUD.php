@@ -56,6 +56,48 @@ class CRUD {
     }
 
     /**
+     * Obtiene todos los servicios de un cliente en concreto
+     * 
+     * @param int $idCliente ID del cliente
+     * @return array|null Listado de los servicios de un cliente.
+     */
+    public function getServiciosPorCliente($idCliente) {
+        $sql = "SELECT s.id, s.idCliente, s.asunto, s.estado
+                FROM Servicio s
+                WHERE s.idCliente = :idCliente
+                ORDER BY s.id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':idCliente', $idCliente, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $servicios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Para cada servicio, obtenemos sus detalles y los añadimos al array.
+        foreach ($servicios as &$servicio) {
+            $servicio['detalles'] = $this->getDetallesServicio($servicio['id']);
+        }
+        
+        return $servicios;
+    }
+
+    /**
+     * Obtiene los detalles de un servicio por id
+     * 
+     * @param int $idServicio ID del servicio
+     * @return array|null Listado de servicios con datos del cliente.
+     */
+    public function getDetallesServicio($idServicio) {
+        $sql = "SELECT d.id, d.idservicio, d.detalle
+                FROM serviciodetalle d
+                WHERE d.idservicio = :idservicio
+                ORDER BY d.id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':idservicio', $idServicio, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
      * Obtiene los datos de un cliente a partir de su DNI.
      * 
      * @param string $dni DNI del cliente a buscar.
