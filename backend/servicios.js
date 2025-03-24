@@ -4,6 +4,22 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   getServiciosCliente();
+
+  // Función para el filtrado por estado
+  const filterSelect = document.getElementById("filterStatus");
+  filterSelect.addEventListener("change", function () {
+    const selectedStatus = this.value;
+    const accordionItems = document.querySelectorAll(".accordion-item");
+    accordionItems.forEach(item => {
+      const itemStatus = item.getAttribute("data-status");
+      // Si se selecciona "todos" o el estado coincide, se muestra el item
+      if (selectedStatus === "todos" || itemStatus === selectedStatus) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
 });
 
 function getServiciosCliente() {
@@ -20,10 +36,13 @@ function getServiciosCliente() {
     }
   };
 
+
   // Configurar la petición: método POST y URL del script PHP
   xmlhttp.open("POST", "../backend/servicios/getServiciosClientes.php", true);
   xmlhttp.send();
 }
+
+
 
 function setServicios(servicios) {
   const divPadre = document.getElementById("accordionServicios");
@@ -57,7 +76,7 @@ function setServicios(servicios) {
 
       // Usamos un template string para crear el HTML
       const accordionItem = `
-              <div class="accordion-item">
+              <div class="accordion-item" data-status="${estado.toLowerCase()}">
                 <h2 class="accordion-header" id="heading${idServicio}">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${idServicio}" aria-controls="collapse${idServicio}">
                     <span class="me-auto">${asunto}</span>
