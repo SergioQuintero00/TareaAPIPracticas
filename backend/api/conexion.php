@@ -3,9 +3,9 @@
 class Conexion
 {
   private $host = "localhost";
-  private $dbname = "taller";
-  private $dbuser = "abel";
-  private $dbpassword = "12341234";
+  private $dbname = "TareaServicios";
+  private $dbuser = "sergio";
+  private $dbpassword = "root";
   private $pdo;
 
   public function __construct()
