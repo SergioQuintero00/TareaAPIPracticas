@@ -23,6 +23,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+//Esto redirije a la página para ver los datos del servicio y pasa el id por la url
+function verDatosServicio(idServicio) { 
+  window.location.href = "detallesServicio.html?id=" + idServicio;
+}
+
 function getServiciosCliente() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
@@ -42,8 +47,6 @@ function getServiciosCliente() {
   xmlhttp.open("POST", "../backend/servicios/getServiciosClientes.php", true);
   xmlhttp.send();
 }
-
-
 
 function setServicios(servicios) {
   const divPadre = document.getElementById("accordionServicios");
