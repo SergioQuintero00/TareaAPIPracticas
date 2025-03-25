@@ -4,6 +4,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   getServiciosCliente();
+  setNombreCliente();
 
   // Función para el filtrado por estado
   const filterSelect = document.getElementById("filterStatus");
@@ -97,4 +98,27 @@ function setServicios(servicios) {
   } else {
     divPadre.innerHTML = "<p> No existe ningún servicio </p>";
   }
+}
+
+function setNombreCliente(){
+  var etiqueta = document.getElementById("nombre_cliente");
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200){
+      var respuesta = JSON.parse(this.responseText);
+      if (respuesta.success){
+        etiqueta.innerHTML = respuesta.nombre;
+      }
+    }
+  }
+
+  xmlhttp.open("OPEN", "../backend/session/getDatosClientes.php", true);
+  xmlhttp.send();
+}
+
+function salirSesion(){
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST", "../backend/session/logout.php");
+  xmlhttp.send();
 }
