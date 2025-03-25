@@ -88,6 +88,7 @@ function setServicios(servicios) {
                 <div id="collapse${idServicio}" class="accordion-collapse collapse" aria-labelledby="heading${idServicio}" data-bs-parent="#accordionServicios">
                   <div class="accordion-body">
                     ${detalle}
+                    <a href="servicio.html" class="btn  btn-dark float-end">Ver detalles</a>
                   </div>
                 </div>
               </div>
@@ -100,14 +101,14 @@ function setServicios(servicios) {
   }
 }
 
-function setNombreCliente(){
+function setNombreCliente() {
   var etiqueta = document.getElementById("nombre_cliente");
 
   var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200){
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
       var respuesta = JSON.parse(this.responseText);
-      if (respuesta.success){
+      if (respuesta.success) {
         etiqueta.innerHTML = respuesta.nombre;
       }
     }
@@ -117,7 +118,7 @@ function setNombreCliente(){
   xmlhttp.send();
 }
 
-function salirSesion(){
+function salirSesion() {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.open("POST", "../backend/session/logout.php");
   xmlhttp.send();
