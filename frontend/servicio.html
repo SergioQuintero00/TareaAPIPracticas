@@ -15,14 +15,51 @@
         .service-card {
             margin-top: 30px;
         }
+
+        /* Estilos para el Timeline centrado */
+        .timeline {
+            position: relative;
+            max-width: 600px;
+            margin: 50px auto 0 auto;
+            padding: 0 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dee2e6;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: #0d6efd;
+            border-radius: 50%;
+            top: 20px;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- Navbar Unificado -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="#">Mi Empresa</a>
+            <a class="navbar-brand" href="#">Mi Taller</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -35,81 +72,85 @@
 
     <!-- Contenido principal -->
     <div class="container service-card">
-        <h1 class="mb-4">Detalles del Servicio</h1>
+        <h1 class="mb-4 text-center">Detalles del Servicio</h1>
         <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-secondary text-white">
                 Servicio #12345
             </div>
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-sm-4"><strong>Fecha entrada:</strong></div>
-                    <div class="col-sm-8" id="fechaEntrada">01/03/2025</div>
+                    <div class="col-sm-8">01/03/2025</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4"><strong>Fecha salida:</strong></div>
-                    <div class="col-sm-8" id="fechaSalida">
-                        <!-- Si la fecha de salida no está disponible se muestra "Pendiente" o "En Proceso" -->
+                    <div class="col-sm-8">
                         <span class="text-muted">Pendiente</span>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4"><strong>Estado:</strong></div>
-                    <div class="col-sm-8" id="estado">En Proceso</div>
+                    <div class="col-sm-8">En Proceso</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4"><strong>Tipo servicio:</strong></div>
-                    <div class="col-sm-8" id="tipoServicio">Mantenimiento Preventivo</div>
+                    <div class="col-sm-8">Mantenimiento Preventivo</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4"><strong>ObservacionesTec:</strong></div>
-                    <div class="col-sm-8" id="observacionesTec">Se requiere revisión detallada del equipo y
-                        actualización de firmware.</div>
+                    <div class="col-sm-8">Se requiere revisión del sistema de frenos y actualización de firmware.</div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-sm-4"><strong>IdServicio:</strong></div>
-                    <div class="col-sm-8" id="idServicio">12345</div>
+                    <div class="col-sm-8">12345</div>
                 </div>
-                <!-- Botón de regreso o acción adicional -->
-                <a href="menu.html" class="btn btn-secondary mt-3">Volver a la lista de servicios</a>
+                <!-- Botón de regreso -->
+                <div class="text-center">
+                    <a href="menu.html" class="btn btn-secondary mt-3">Volver a la lista de servicios</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="mt-5">
-        <h2>Historial de Servicios</h2>
-        <div class="timeline">
-            <!-- Ítem 1 -->
-            <div class="timeline-item">
-                <div class="d-flex justify-content-between">
-                    <h5 class="mb-1">En Transporte</h5>
-                    <small class="text-muted">02/03/2025 10:30</small>
+        <!-- Sección de Historial de Servicios -->
+        <div class="mt-5">
+            <h2 class="text-center mb-4">Historial de Servicios</h2>
+            <div class="timeline">
+                <!-- Evento 1: Recepción del Coche -->
+                <div class="timeline-item">
+                    <br>
+                    <h5>Recepción del Coche</h5>
+                    <small class="text-muted">01/03/2025 09:00</small>
+                    <p class="mt-2">El coche fue recibido y se realizó la inspección inicial.</p>
                 </div>
-                <p class="mb-1">El vehículo se encuentra en tránsito hacia el centro de servicio.</p>
-            </div>
-            <!-- Ítem 2 -->
-            <div class="timeline-item">
-                <div class="d-flex justify-content-between">
-                    <h5 class="mb-1">En Reparto</h5>
-                    <small class="text-muted">02/03/2025 12:00</small>
+                <!-- Evento 2: Diagnóstico -->
+                <div class="timeline-item">
+                    <br>
+                    <h5>Diagnóstico</h5>
+                    <small class="text-muted">01/03/2025 10:30</small>
+                    <p class="mt-2">Se identificaron problemas en el sistema de frenos y suspensión.</p>
                 </div>
-                <p class="mb-1">El paquete de partes ha sido enviado al centro de revisión.</p>
-            </div>
-            <!-- Ítem 3 -->
-            <div class="timeline-item">
-                <div class="d-flex justify-content-between">
-                    <h5 class="mb-1">Completado</h5>
-                    <small class="text-muted">03/03/2025 16:45</small>
+                <!-- Evento 3: Reparación en Proceso -->
+                <div class="timeline-item">
+                    <br>
+                    <h5>Reparación en Proceso</h5>
+                    <small class="text-muted">01/03/2025 12:00</small>
+                    <p class="mt-2">El taller está realizando las reparaciones necesarias.</p>
                 </div>
-                <p class="mb-1">El servicio fue finalizado y el vehículo se entregó al cliente.</p>
+                <!-- Evento 4: Servicio Completado -->
+                <div class="timeline-item">
+                    <br>
+                    <h5>Servicio Completado</h5>
+                    <small class="text-muted">01/03/2025 16:45</small>
+                    <p class="mt-2">El servicio fue finalizado y el coche está listo para ser entregado.</p>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Footer -->
     <footer class="bg-light text-center py-3 mt-5">
         <div class="container">
-            <small class="text-muted">&copy; 2025 Gestión de Servicios. Todos los derechos reservados.</small>
+            <small class="text-muted">&copy; 2025 Mi Taller. Todos los derechos reservados.</small>
         </div>
     </footer>
 
