@@ -34,23 +34,15 @@ class CRUD {
      */
     public function getServicioById($id) {
         // Consultar la información del servicio y del cliente
-        $sql = "SELECT s.id, s.idCliente, s.asunto, s.estado, c.nombre AS cliente_nombre, 
-                    c.dni AS cliente_dni, c.telefono AS cliente_telefono
+        $sql = "SELECT s.id, s.idCliente, s.asunto, s.estado, s.detalles, s.ObservacionTec, s.Fecha_Entrada, 
+                s.Fecha_Salida, s.Fecha_Creacion, s.TipoServicio, c.nombre AS cliente_nombre, c.dni AS cliente_dni,
+                c.telefono AS cliente_telefono
                 FROM Servicio s
                 JOIN Cliente c ON s.idCliente = c.id
                 WHERE s.id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['id' => $id]);
         $servicio = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($servicio) {
-            // Consultar los detalles del servicio
-            $sqlDetalles = "SELECT id, detalle FROM ServicioDetalle WHERE idServicio = :idServicio";
-            $stmtDetalles = $this->pdo->prepare($sqlDetalles);
-            $stmtDetalles->execute(['idServicio' => $id]);
-            $detalles = $stmtDetalles->fetchAll(PDO::FETCH_ASSOC);
-            $servicio['detalles'] = $detalles;
-        }
 
         return $servicio;
     }
@@ -62,7 +54,8 @@ class CRUD {
      * @return array|null Listado de los servicios de un cliente.
      */
     public function getServiciosPorCliente($idCliente) {
-        $sql = "SELECT s.id, s.idCliente, s.asunto, s.estado
+        $sql = "SELECT s.id, s.idCliente, s.asunto, s.estado, s.detalles, s.ObservacionTec, s.Fecha_Entrada, 
+                s.Fecha_Salida, s.Fecha_Creacion, s.TipoServicio
                 FROM Servicio s
                 WHERE s.idCliente = :idCliente
                 ORDER BY s.id";
@@ -71,11 +64,6 @@ class CRUD {
         $stmt->execute();
 
         $servicios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Para cada servicio, obtenemos sus detalles y los añadimos al array.
-        foreach ($servicios as &$servicio) {
-            $servicio['detalles'] = $this->getDetallesServicio($servicio['id']);
-        }
         
         return $servicios;
     }
@@ -86,11 +74,28 @@ class CRUD {
      * @param int $idServicio ID del servicio
      * @return array|null Listado de servicios con datos del cliente.
      */
-    public function getDetallesServicio($idServicio) {
-        $sql = "SELECT d.id, d.idservicio, d.detalle
-                FROM serviciodetalle d
-                WHERE d.idservicio = :idservicio
-                ORDER BY d.id";
+    // public function getDetallesServicio($idServicio) {
+    //     $sql = "SELECT d.id, d.idservicio, d.detalle
+    //             FROM serviciodetalle d
+    //             WHERE d.idservicio = :idservicio
+    //             ORDER BY d.id";
+    //     $stmt = $this->pdo->prepare($sql);
+    //     $stmt->bindParam(':idservicio', $idServicio, PDO::PARAM_INT);
+    //     $stmt->execute();
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }
+
+    /**
+     * Obtiene el historial de un servicio ordenado de más antiguo a más actual
+     * 
+     * @param int $idServicio ID del servicio
+     * @return array|null Listado de servicios con datos del cliente.
+     */
+    public function getHistorialServicio($idServicio) {
+        $sql = "SELECT h.id, h.IDServicio, h.Detalle, h.Fechayhora
+                FROM Serv_Historial h
+                WHERE h.IDServicio = :idservicio
+                ORDER BY h.Fechayhora ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':idservicio', $idServicio, PDO::PARAM_INT);
         $stmt->execute();
