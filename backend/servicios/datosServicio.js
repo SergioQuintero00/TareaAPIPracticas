@@ -93,7 +93,7 @@ function setDatosServicio(datos) {
 //Este método inserta los datos en el html o inserta html en la página sobre el historial del servicio
 function setDatosHistorial(historial) {
   const timelineContainer = document.querySelector('.timeline');
-  let html;
+  let html = "";
   historial.forEach(item => {
     // Extrae los datos del historial
     const idHistorial = item.id;
