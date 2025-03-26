@@ -16,48 +16,25 @@ function getDatosServicio(idServicio) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-<<<<<<< Updated upstream
-      var response = JSON.parse(this.responseText);
-      console.log("Respuesta del servidor:", response); // Ver la estructura
-      if (response.success) {
-        if (response.datos && response.datos.data) {
-          setDatosServicio(response.datos.data);
-        } else {
-          console.error("La propiedad datos.data no existe en la respuesta", response);
-        }
-      } else {
-        alert(response.message);
-=======
       // Procesar la respuesta JSON del servidor
       var response = JSON.parse(this.responseText);
       if (response.success) {
         setDatosServicio(response.datos);
       } else {
         alert(response.message)
->>>>>>> Stashed changes
       }
     }
   };
 
-<<<<<<< Updated upstream
-  xmlhttp.open("POST", "../backend/servicios/getServicio.php", true);
-  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-
-=======
   // Configurar la petición: método POST y URL del script PHP
   xmlhttp.open("POST", "../backend/servicios/getServicio.php", true);
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 
   // Convertir los datos a formato JSON y enviarlos
->>>>>>> Stashed changes
   var data = JSON.stringify({ idServicio: idServicio });
   xmlhttp.send(data);
 }
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 function getHistorialServicio(idServicio) {
   var xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = function () {
@@ -96,34 +73,10 @@ function setDatosServicio(datos) {
   const cliente_nombre = datos.cliente_nombre;
   const cliente_dni = datos.cliente_dni;
   const cliente_telefono = datos.cliente_telefono;
-
-<<<<<<< Updated upstream
-  document.getElementById("asuntoId").innerHTML = asunto + " #" + idServicio;
-  document.getElementById("fechaEntrada").innerHTML = Fecha_Entrada;
-  document.getElementById("fechaSalida").innerHTML = Fecha_Salida;
-  document.getElementById("estado").innerHTML = estado;
-  document.getElementById("tipoServicio").innerHTML = TipoServicio;
-  document.getElementById("observaciones").innerHTML = ObservacionTec;
-  document.getElementById("idServicio").innerHTML = idServicio;
-
-}
-
-function setDatosHistorial(historial) {
-  // Selecciona el contenedor donde se mostrará la línea de tiempo
-  const timelineContainer = document.querySelector('.timeline');
-
-  // Inicializa una variable para acumular el HTML generado
-  let html = "";
-
-=======
-  document.getElementById("asuntoId").innerHTML("" + asunto + " #" + idServicio);
-
-
 }
 
 //Este método inserta los datos en el html o inserta html en la página sobre el historial del servicio
 function setDatosHistorial(historial) {
->>>>>>> Stashed changes
   historial.forEach(item => {
     // Extrae los datos del historial
     const idHistorial = item.id;

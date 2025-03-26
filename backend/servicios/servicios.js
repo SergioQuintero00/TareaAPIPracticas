@@ -25,10 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //Esto redirije a la página para ver los datos del servicio y pasa el id por la url
 function verDatosServicio(idServicio) {
-<<<<<<< Updated upstream
-  console.log("Redirigiendo a: servicio.html?id=" + idServicio);
-=======
->>>>>>> Stashed changes
   window.location.href = "servicio.html?id=" + idServicio;
 }
 
