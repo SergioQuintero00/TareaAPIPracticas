@@ -24,9 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //Esto redirije a la página para ver los datos del servicio y pasa el id por la url
-function verDatosServicio(idServicio) { 
-  window.location.href = "detallesServicio.html?id=" + idServicio;
+function verDatosServicio(idServicio) {
+  console.log("Redirigiendo a: servicio.html?id=" + idServicio);
+  window.location.href = "servicio.html?id=" + idServicio;
 }
+
 
 function getServiciosCliente() {
   var xmlhttp = new XMLHttpRequest();
@@ -91,7 +93,7 @@ function setServicios(servicios) {
                 <div id="collapse${idServicio}" class="accordion-collapse collapse" aria-labelledby="heading${idServicio}" data-bs-parent="#accordionServicios">
                   <div class="accordion-body">
                     ${detalle}
-                    <a href="servicio.html" class="btn  btn-dark float-end">Ver detalles</a>
+                    <a class="btn btn-dark float-end" onclick="verDatosServicio(${idServicio})">Ver detalles</a>
                   </div>
                 </div>
               </div>
