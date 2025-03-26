@@ -21,15 +21,15 @@ SET row_security = off;
 
 --
 -- TOC entry 4812 (class 1262 OID 16405)
--- Name: TareaServicios; Type: DATABASE; Schema: -; Owner: sergio
+-- Name: TareaServicios; Type: DATABASE; Schema: -; Owner: abel
 --
 
-CREATE DATABASE "TareaServicios" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'es-ES';
+CREATE DATABASE "taller" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'es-ES';
 
 
-ALTER DATABASE "TareaServicios" OWNER TO sergio;
+ALTER DATABASE "taller" OWNER TO abel;
 
-\connect "TareaServicios"
+\connect "taller"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -68,7 +68,7 @@ SET default_table_access_method = heap;
 
 --
 -- TOC entry 221 (class 1259 OID 24599)
--- Name: Serv_Historial; Type: TABLE; Schema: public; Owner: sergio
+-- Name: Serv_Historial; Type: TABLE; Schema: public; Owner: abel
 --
 
 CREATE TABLE public."Serv_Historial" (
@@ -79,7 +79,7 @@ CREATE TABLE public."Serv_Historial" (
 );
 
 
-ALTER TABLE public."Serv_Historial" OWNER TO sergio;
+ALTER TABLE public."Serv_Historial" OWNER TO abel;
 
 --
 -- TOC entry 218 (class 1259 OID 16407)
@@ -186,7 +186,7 @@ ALTER TABLE ONLY public.servicio ALTER COLUMN id SET DEFAULT nextval('public.ser
 
 --
 -- TOC entry 4659 (class 2606 OID 24605)
--- Name: Serv_Historial Serv_Historial_pkey; Type: CONSTRAINT; Schema: public; Owner: sergio
+-- Name: Serv_Historial Serv_Historial_pkey; Type: CONSTRAINT; Schema: public; Owner: abel
 --
 
 ALTER TABLE ONLY public."Serv_Historial"
@@ -222,7 +222,7 @@ ALTER TABLE ONLY public.servicio
 
 --
 -- TOC entry 4661 (class 2606 OID 24606)
--- Name: Serv_Historial FK_HIST_SERVICIO; Type: FK CONSTRAINT; Schema: public; Owner: sergio
+-- Name: Serv_Historial FK_HIST_SERVICIO; Type: FK CONSTRAINT; Schema: public; Owner: abel
 --
 
 ALTER TABLE ONLY public."Serv_Historial"
