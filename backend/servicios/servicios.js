@@ -93,6 +93,7 @@ function setServicios(servicios) {
                   <div class="accordion-body">
                     ${detalle}
                     <a class="btn btn-dark float-end" onclick="verDatosServicio(${idServicio})">Ver detalles</a>
+                    <br><br>
                   </div>
                 </div>
               </div>
