@@ -19,7 +19,7 @@ function getDatosServicio(idServicio) {
       // Procesar la respuesta JSON del servidor
       var response = JSON.parse(this.responseText);
       if (response.success) {
-        setDatosServicio(response.datos);
+        setDatosServicio(response.datos.data);
       } else {
         alert(response.message)
       }
@@ -73,7 +73,22 @@ function setDatosServicio(datos) {
   const cliente_nombre = datos.cliente_nombre;
   const cliente_dni = datos.cliente_dni;
   const cliente_telefono = datos.cliente_telefono;
+
+  document.getElementById("asuntoId").innerHTML = asunto + " #" + idServicio;
+  document.getElementById("fechaEntrada").innerHTML = Fecha_Entrada;
+  document.getElementById("fechaSalida").innerHTML = Fecha_Salida;
+  document.getElementById("estado").innerHTML = estado;
+  document.getElementById("tipoServicio").innerHTML = TipoServicio;
+  document.getElementById("observaciones").innerHTML = ObservacionTec;
+  document.getElementById("idServicio").innerHTML = idServicio;
+
 }
+
+
+
+
+
+
 
 //Este método inserta los datos en el html o inserta html en la página sobre el historial del servicio
 function setDatosHistorial(historial) {
