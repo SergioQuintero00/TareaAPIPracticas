@@ -94,6 +94,7 @@ function setDatosServicio(datos) {
 function setDatosHistorial(historial) {
   const timelineContainer = document.querySelector('.timeline');
   let html = "";
+  let numeroEvento = 1;
   historial.forEach(item => {
     // Extrae los datos del historial
     const idHistorial = item.id;
@@ -105,11 +106,12 @@ function setDatosHistorial(historial) {
     html += `
       <div class="timeline-item">
         <br>
-        <h5>Evento ${idHistorial}</h5>
+        <h5>Evento ${numeroEvento}</h5>
         <small class="text-muted">${fechayhora}</small>
         <p class="mt-2">${detalle}</p>
       </div>
     `;
+    numeroEvento = numeroEvento + 1;
   });
 
   // Inserta el HTML generado en el contenedor de la línea de tiempo
