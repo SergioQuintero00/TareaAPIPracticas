@@ -5,7 +5,7 @@
 -- Dumped from database version 17.4
 -- Dumped by pg_dump version 17.2
 
--- Started on 2025-03-25 13:46:28
+-- Started on 2025-03-27 12:19:31
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -20,16 +20,16 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 4812 (class 1262 OID 16405)
--- Name: TareaServicios; Type: DATABASE; Schema: -; Owner: abel
+-- TOC entry 4817 (class 1262 OID 16405)
+-- Name: TareaServicios; Type: DATABASE; Schema: -; Owner: sergio
 --
 
-CREATE DATABASE "taller" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'es-ES';
+CREATE DATABASE "TareaServicios" WITH TEMPLATE = template0 ENCODING = 'UTF8' LOCALE_PROVIDER = libc LOCALE = 'es-ES';
 
 
-ALTER DATABASE "taller" OWNER TO abel;
+ALTER DATABASE "TareaServicios" OWNER TO sergio;
 
-\connect "taller"
+\connect "TareaServicios"
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -42,25 +42,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- TOC entry 4 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO pg_database_owner;
-
---
--- TOC entry 4813 (class 0 OID 0)
--- Dependencies: 4
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
 
 SET default_tablespace = '';
 
@@ -68,7 +49,7 @@ SET default_table_access_method = heap;
 
 --
 -- TOC entry 221 (class 1259 OID 24599)
--- Name: Serv_Historial; Type: TABLE; Schema: public; Owner: abel
+-- Name: Serv_Historial; Type: TABLE; Schema: public; Owner: sergio
 --
 
 CREATE TABLE public."Serv_Historial" (
@@ -79,7 +60,7 @@ CREATE TABLE public."Serv_Historial" (
 );
 
 
-ALTER TABLE public."Serv_Historial" OWNER TO abel;
+ALTER TABLE public."Serv_Historial" OWNER TO sergio;
 
 --
 -- TOC entry 218 (class 1259 OID 16407)
@@ -114,7 +95,7 @@ CREATE SEQUENCE public.cliente_id_seq
 ALTER SEQUENCE public.cliente_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4814 (class 0 OID 0)
+-- TOC entry 4818 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -160,7 +141,7 @@ CREATE SEQUENCE public.servicio_id_seq
 ALTER SEQUENCE public.servicio_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4815 (class 0 OID 0)
+-- TOC entry 4819 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: servicio_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -185,8 +166,59 @@ ALTER TABLE ONLY public.servicio ALTER COLUMN id SET DEFAULT nextval('public.ser
 
 
 --
+-- TOC entry 4808 (class 0 OID 16407)
+-- Dependencies: 218
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.cliente VALUES (4, 'sergio', '22222222R', '601058114', '$2y$10$wBIh.IlfPQjt/VNQn87Fh.xrq7e9x4zXNQgGfvsYvHlVOQGYZx1KO');
+
+
+--
+-- TOC entry 4810 (class 0 OID 16416)
+-- Dependencies: 220
+-- Data for Name: servicio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.servicio VALUES (1, 4, 'Reparación de notebook', 'En proceso', 'Pantalla rota, no enciende.', NULL, '2025-03-25 11:00:00+01', NULL, '2025-03-24 10:30:00+01', 'Reparación');
+INSERT INTO public.servicio VALUES (2, 4, 'Instalación de software', 'Completado', 'Instalación de Office y antivirus.', 'Todo correcto, actualizado.', '2025-03-20 15:00:00+01', '2025-03-20 17:30:00+01', '2025-03-19 13:15:00+01', 'Instalación');
+INSERT INTO public.servicio VALUES (3, 4, 'Formateo y backup', 'Pendiente', 'Cliente solicita respaldo antes de formatear.', NULL, '2025-03-27 09:45:00+01', NULL, '2025-03-26 16:00:00+01', 'Mantenimiento');
+
+--
+-- TOC entry 4811 (class 0 OID 24599)
+-- Dependencies: 221
+-- Data for Name: Serv_Historial; Type: TABLE DATA; Schema: public; Owner: sergio
+--
+
+INSERT INTO public."Serv_Historial" VALUES (1, 1, 'Recepción ordenador que no enciende', '2025-03-25 11:00:00+01');
+INSERT INTO public."Serv_Historial" VALUES (2, 1, 'Arreglando pantalla rota, no enciende.', '2025-03-25 17:00:00+01');
+INSERT INTO public."Serv_Historial" VALUES (3, 2, 'Recepción de equipo para instalación de software', '2025-03-20 15:00:00+01');
+INSERT INTO public."Serv_Historial" VALUES (5, 2, 'Office y antivirus Instalado.', '2025-03-20 17:30:00+01');
+INSERT INTO public."Serv_Historial" VALUES (6, 3, 'Cliente solicita respaldo antes de formatear.', '2025-03-27 09:45:00+01');
+INSERT INTO public."Serv_Historial" VALUES (4, 2, 'En proceso de instalación', '2025-03-20 16:15:00+01');
+
+
+--
+-- TOC entry 4820 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.cliente_id_seq', 4, true);
+
+
+--
+-- TOC entry 4821 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: servicio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.servicio_id_seq', 2, true);
+
+
+--
 -- TOC entry 4659 (class 2606 OID 24605)
--- Name: Serv_Historial Serv_Historial_pkey; Type: CONSTRAINT; Schema: public; Owner: abel
+-- Name: Serv_Historial Serv_Historial_pkey; Type: CONSTRAINT; Schema: public; Owner: sergio
 --
 
 ALTER TABLE ONLY public."Serv_Historial"
@@ -222,7 +254,7 @@ ALTER TABLE ONLY public.servicio
 
 --
 -- TOC entry 4661 (class 2606 OID 24606)
--- Name: Serv_Historial FK_HIST_SERVICIO; Type: FK CONSTRAINT; Schema: public; Owner: abel
+-- Name: Serv_Historial FK_HIST_SERVICIO; Type: FK CONSTRAINT; Schema: public; Owner: sergio
 --
 
 ALTER TABLE ONLY public."Serv_Historial"
@@ -238,7 +270,7 @@ ALTER TABLE ONLY public.servicio
     ADD CONSTRAINT servicio_idcliente_fkey FOREIGN KEY (idcliente) REFERENCES public.cliente(id) ON DELETE CASCADE;
 
 
--- Completed on 2025-03-25 13:46:28
+-- Completed on 2025-03-27 12:19:31
 
 --
 -- PostgreSQL database dump complete
